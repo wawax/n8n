@@ -22,7 +22,7 @@ export const resourceDescription: INodeProperties[] = [
 				value: 'computer',
 			},
 		],
-		default: 'session',
+		default: '',
 		required: true,
 	},
 ]

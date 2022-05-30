@@ -21,13 +21,5 @@ export class GlpiApi implements ICredentialType {
 			placeholder: 'HAXeWCLWk3AyCtXjS3Y0Lwve1GVriKZLffEEHhSc',
 			required: true,
 		},
-		{
-			displayName: 'User Token',
-			name: 'userToken',
-			type: 'string' as NodePropertyTypes,
-			default: '',
-			placeholder: 'HAXeWCLWk3AyCtXjS3Y0Lwve1GVriKZLffEEHhSc',
-			required: true,
-		},
 	];
 }

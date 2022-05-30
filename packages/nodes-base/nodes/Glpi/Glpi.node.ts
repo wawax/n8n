@@ -17,8 +17,8 @@ import {
 	sessionOperations,
 	profileOperations,
 	resourceDescription,
+	computerOperations,
 } from './descriptions';
-import { computerOperations } from './descriptions/ComputerDescription';
 
 export class Glpi implements INodeType {
 	// eslint-disable-next-line n8n-nodes-base/node-class-description-missing-subtitle
@@ -46,10 +46,9 @@ export class Glpi implements INodeType {
 		],
 		properties: [
 			...resourceDescription,
+			...computerOperations,
 			...sessionOperations,
 			...profileOperations,
-			...computerOperations,
-
 		],
 	};
 
@@ -62,11 +61,13 @@ export class Glpi implements INodeType {
 
 		if (resource === 'session') {
 			if (operation === 'login') {
+				const userToken = this.getNodeParameter('userToken', 0) as string;
+
 				const options: OptionsWithUri = {
 					headers: {
 						'Accept': 'application/json',
 						'App-Token': `${credentials.appToken}`,
-						'Authorization': `user_token ${credentials.userToken}`,
+						'Authorization': `user_token ${userToken}`,
 					},
 					method: 'GET',
 					uri: `${credentials.url}initSession`,
@@ -86,6 +87,49 @@ export class Glpi implements INodeType {
 					},
 					method: 'GET',
 					uri: `${credentials.url}killSession`,
+					json: true,
+				};
+				responseData = await this.helpers.request(options);
+
+			}
+
+		}
+
+		if (resource === 'profile') {
+			const sessionToken = this.getNodeParameter('sessionToken', 0) as string;
+
+			if (operation === 'getActiveProfile' || operation === 'getMyProfiles') {
+
+				let url = (operation === 'getMyProfiles')?'getMyProfiles':'getActiveProfile'
+				const options: OptionsWithUri = {
+					headers: {
+						'Accept': 'application/json',
+						'App-Token': `${credentials.appToken}`,
+						'Session-Token': `${sessionToken}`,
+					},
+					method: 'GET',
+					uri: `${credentials.url}${url}`,
+					json: true,
+				};
+				responseData = await this.helpers.request(options);
+
+			}
+
+			if (operation === 'changeActiveProfile') {
+				const sessionToken = this.getNodeParameter('sessionToken', 0) as string;
+				const profileID = this.getNodeParameter('profiles_id', 0) as string;
+
+				const options: OptionsWithUri = {
+					headers: {
+						'Accept': 'application/json',
+						'App-Token': `${credentials.appToken}`,
+						'Session-Token': `${sessionToken}`,
+					},
+					body: {
+						'profiles_id': `${profileID}`,
+					},
+					method: 'POST',
+					uri: `${credentials.url}changeActiveProfile`,
 					json: true,
 				};
 				responseData = await this.helpers.request(options);

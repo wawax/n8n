@@ -2,7 +2,7 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export const profileOperations: INodeProperties[] = [
+export const sessionOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -30,6 +30,24 @@ export const profileOperations: INodeProperties[] = [
 		default: 'login',
 	},
 	{
+		displayName: 'User token',
+		name: 'userToken',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: [
+					'login',
+				],
+				resource: [
+					'session',
+				],
+			},
+		},
+		default: '',
+	},
+
+	{
 		displayName: 'Session token',
 		name: 'sessionToken',
 		type: 'string',
@@ -44,7 +62,7 @@ export const profileOperations: INodeProperties[] = [
 				],
 			},
 		},
-		default: 'logout',
+		default: '',
 	},
 ]
 

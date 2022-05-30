@@ -2,10 +2,10 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export const sessionOperations: INodeProperties[] = [
+export const profileOperations: INodeProperties[] = [
 	{
-		displayName: 'Action',
-		name: 'action',
+		displayName: 'Operation',
+		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
 		displayOptions: {
@@ -34,10 +34,6 @@ export const sessionOperations: INodeProperties[] = [
 		],
 		default: '',
 	},
-
-	// ----------------------------------------
-	//             profile: getActiveProfile
-	// ----------------------------------------
 	{
 		displayName: 'Session token',
 		name: 'sessionToken',
@@ -46,56 +42,30 @@ export const sessionOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				operation: [
-					'getActiveProfile'
+					'getActiveProfile', 'changeActiveProfile', 'getMyProfiles'
 				],
-		resource: [
+				resource: [
 					'profile',
 				],
 			},
 		},
 		default: '',
 	},
-
-	// ----------------------------------------
-	//             profile: getMyProfiles
-	// ----------------------------------------
 	{
-		displayName: 'Session token',
-		name: 'sessionToken',
+		displayName: 'profiles_id',
+		name: 'profiles_id',
 		type: 'string',
 		required: true,
 		displayOptions: {
 			show: {
 				operation: [
-					'getMyProfiles'
+					'changeActiveProfile',
 				],
-		resource: [
+				resource: [
 					'profile',
 				],
 			},
 		},
 		default: '',
 	},
-
-	// ----------------------------------------
-	//             profile: changeActiveProfile
-	// ----------------------------------------
-	{
-		displayName: 'Session token',
-		name: 'sessionToken',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				operation: [
-					'changeActiveProfile'
-				],
-		resource: [
-					'profile',
-				],
-			},
-		},
-		default: '',
-	},
-
 ]
