@@ -21,6 +21,10 @@ export const resourceDescription: INodeProperties[] = [
 				name: 'Computer',
 				value: 'computer',
 			},
+			{
+				name: 'Custom',
+				value: 'custom',
+			},
 		],
 		default: '',
 		required: true,

@@ -2,7 +2,7 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export const computerOperations: INodeProperties[] = [
+export const customOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -11,7 +11,7 @@ export const computerOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'computer',
+					'custom',
 				],
 			},
 		},
@@ -46,7 +46,7 @@ export const computerOperations: INodeProperties[] = [
 	},
 
 			// ----------------------------------------
-			//             Computer: create
+			//             custom: create
 			// ----------------------------------------
 			{
 				displayName: 'Session token',
@@ -59,7 +59,24 @@ export const computerOperations: INodeProperties[] = [
 							'create', 'update', 'delete', 'get', 'getAll',
 						],
 					resource: [
-							'computer',
+							'custom',
+						],
+					},
+				},
+				default: '',
+			},
+			{
+				displayName: 'Itemtype',
+				name: 'itemtype',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: [
+							'create', 'update', 'delete', 'get', 'getAll',
+						],
+					resource: [
+							'custom',
 						],
 					},
 				},
@@ -77,7 +94,7 @@ export const computerOperations: INodeProperties[] = [
 							'update', 'delete', 'get',
 						],
 					resource: [
-							'computer',
+							'custom',
 						],
 					},
 				},
@@ -93,7 +110,7 @@ export const computerOperations: INodeProperties[] = [
 				displayOptions: {
 						show: {
 								resource: [
-										'computer',
+										'custom',
 								],
 								operation: [
 										'create', 'update',
@@ -133,13 +150,13 @@ export const computerOperations: INodeProperties[] = [
 					},
 					{
 						displayName: 'Model ID',
-						name: 'computermodels_id',
+						name: 'custommodels_id',
 						type: 'number',
 						default: '',
 					},
 					{
 						displayName: 'Type ID',
-						name: 'computertypes_id',
+						name: 'customtypes_id',
 						type: 'number',
 						default: '',
 					},
@@ -184,7 +201,7 @@ export const computerOperations: INodeProperties[] = [
 				displayOptions: {
 						show: {
 								resource: [
-										'computer',
+										'custom',
 								],
 								operation: [
 										'get',
