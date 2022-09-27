@@ -234,7 +234,6 @@ export async function odooExecute(
 			},
 			id: Math.floor(Math.random() * 100),
 		};
-		Logger.info(`itemsID "${itemsID}"`);
 
 		const result = await odooJSONRPCRequest.call(this, body, url);
 		return { id: result };
