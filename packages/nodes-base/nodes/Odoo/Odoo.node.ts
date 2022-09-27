@@ -34,6 +34,7 @@ import {
 	odooGetDBName,
 	odooGetModelFields,
 	odooGetUserID,
+	odooExecute,
 	odooJSONRPCRequest,
 	odooUpdate,
 	processNameValueFields,
@@ -467,6 +468,22 @@ export class Odoo implements INodeType {
 							password,
 							customResource,
 							operation,
+							url,
+							customResourceId,
+						);
+					}
+
+					if (operation === 'execute') {
+						const customResourceId = this.getNodeParameter('customResourceId', i) as string;
+						const actionId = this.getNodeParameter('actionId', i) as string;
+
+						responseData = await odooExecute.call(
+							this,
+							db,
+							userID,
+							password,
+							customResource,
+							actionId,
 							url,
 							customResourceId,
 						);

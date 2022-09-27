@@ -18,6 +18,7 @@ export const mapOperationToJSONRPC = {
 	getAll: 'search_read',
 	update: 'write',
 	delete: 'unlink',
+	execute: 'execute',
 };
 
 export const mapOdooResources: { [key: string]: string } = {
@@ -73,7 +74,7 @@ export interface IOdooResponceFields {
 	}>;
 }
 
-type OdooCRUD = 'create' | 'update' | 'delete' | 'get' | 'getAll';
+type OdooCRUD = 'create' | 'update' | 'delete' | 'get' | 'getAll' | 'execute';
 
 export function odooGetDBName(databaseName: string | undefined, url: string) {
 	if (databaseName) return databaseName;
@@ -197,6 +198,43 @@ export async function odooCreate(
 			},
 			id: Math.floor(Math.random() * 100),
 		};
+
+		const result = await odooJSONRPCRequest.call(this, body, url);
+		return { id: result };
+	} catch (error) {
+		throw new NodeApiError(this.getNode(), error as JsonObject);
+	}
+}
+
+export async function odooExecute(
+	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	db: string,
+	userID: number,
+	password: string,
+	resource: string,
+	actionId: string,
+	url: string,
+	itemsID: string,
+) {
+	try {
+		const body = {
+			jsonrpc: '2.0',
+			method: 'call',
+			params: {
+				service: serviceJSONRPC,
+				method: actionId,
+				args: [
+					db,
+					userID,
+					password,
+					mapOdooResources[resource] || resource,
+					actionId,
+					[+itemsID] || [],
+				],
+			},
+			id: Math.floor(Math.random() * 100),
+		};
+		Logger.info(`itemsID "${itemsID}"`);
 
 		const result = await odooJSONRPCRequest.call(this, body, url);
 		return { id: result };

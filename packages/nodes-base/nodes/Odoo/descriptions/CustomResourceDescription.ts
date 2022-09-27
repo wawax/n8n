@@ -42,6 +42,12 @@ export const customResourceOperations: INodeProperties[] = [
 				action: 'Delete an item',
 			},
 			{
+				name: 'Execute',
+				value: 'execute',
+				description: 'Execute an action on a model',
+				action: 'Execute an action on a model',
+			},
+			{
 				name: 'Get',
 				value: 'get',
 				description: 'Get an item',
@@ -121,7 +127,7 @@ export const customResourceDescription: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				operation: ['get', 'delete'],
+				operation: ['get', 'delete', 'execute'],
 				resource: ['custom'],
 			},
 		},
@@ -283,6 +289,24 @@ export const customResourceDescription: INodeProperties[] = [
 			},
 		],
 	},
+
+	/* -------------------------------------------------------------------------- */
+	/*                                custom:execute                              */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Action ID',
+		name: 'actionId',
+		type: 'string',
+		default: '',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['execute'],
+				resource: ['custom'],
+			},
+		},
+	},
+
 	/* -------------------------------------------------------------------------- */
 	/*                                custom:update                               */
 	/* -------------------------------------------------------------------------- */
